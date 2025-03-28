@@ -10,8 +10,9 @@ type MessageOptions struct {
 
 type MessageOp func(*MessageOptions)
 
-type MQSink interface {
+type MsgSink interface {
 	Send(Message, ...MessageOp) SendToken
+	Close()
 }
 
 // SendToken is a Future on the successful sending of a Message through the Sink
