@@ -1,4 +1,4 @@
-package wlib
+package wutil
 
 type MsgSinkFactory struct{}
 

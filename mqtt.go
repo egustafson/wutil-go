@@ -1,4 +1,4 @@
-package wlib
+package wutil
 
 import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"

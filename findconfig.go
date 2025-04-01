@@ -1,4 +1,4 @@
-package wlib
+package wutil
 
 import (
 	"fmt"

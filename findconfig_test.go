@@ -1,4 +1,4 @@
-package wlib_test
+package wutil_test
 
 import (
 	"fmt"
@@ -7,13 +7,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/werks/wlib-go"
+	wutil "github.com/werks/wlib-go"
 )
 
 // ExampleFindConfig demonstrates locating a configuration file for a
 // program named 'appctl'
 func ExampleLocateConfigFile() {
-	_ = wlib.LocateConfigFile("app-name")
+	_ = wutil.LocateConfigFile("app-name")
 }
 
 func TestLocateConfigFile(t *testing.T) {
@@ -27,7 +27,7 @@ func TestSimpleConfigSearchPath(t *testing.T) {
 	userConfigDir, _ := os.UserConfigDir()
 	assert.True(t, len(userConfigDir) > 0) // guard against an empty path
 
-	searchPath := wlib.ConfigSearchPath(basename)
+	searchPath := wutil.ConfigSearchPath(basename)
 	if assert.True(t, len(searchPath) == 2) {
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s.yml", userConfigDir, basename, basename), searchPath[0])
 		assert.Equal(t, fmt.Sprintf("%s.yml", basename), searchPath[1])
@@ -40,8 +40,8 @@ func TestProfileConfigSearchPath(t *testing.T) {
 	userConfigDir, _ := os.UserConfigDir()
 	assert.True(t, len(userConfigDir) > 0) // guard against an empty path
 
-	searchPath := wlib.ConfigSearchPath(basename,
-		wlib.WithProfile(profile))
+	searchPath := wutil.ConfigSearchPath(basename,
+		wutil.WithProfile(profile))
 	if assert.True(t, len(searchPath) == 3) {
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s/%s.yml", userConfigDir, basename, profile, basename), searchPath[0])
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s-%s.yml", userConfigDir, basename, basename, profile), searchPath[1])
@@ -56,9 +56,9 @@ func TestProfileAndExtensionConfigSearchPath(t *testing.T) {
 	userConfigDir, _ := os.UserConfigDir()
 	assert.True(t, len(userConfigDir) > 0) // guard against an empty path
 
-	searchPath := wlib.ConfigSearchPath(basename,
-		wlib.WithProfile(profile),
-		wlib.WithProfileExtension(profileExt))
+	searchPath := wutil.ConfigSearchPath(basename,
+		wutil.WithProfile(profile),
+		wutil.WithProfileExtension(profileExt))
 	if assert.True(t, len(searchPath) == 3) {
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s/%s-%s.yml", userConfigDir, basename, profile, basename, profileExt), searchPath[0])
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s-%s-%s.yml", userConfigDir, basename, basename, profile, profileExt), searchPath[1])
@@ -72,7 +72,7 @@ func TestFileExtensionConfigSearchPath(t *testing.T) {
 	userConfigDir, _ := os.UserConfigDir()
 	assert.True(t, len(userConfigDir) > 0) // guard against an empty path
 
-	searchPath := wlib.ConfigSearchPath(basename, wlib.WithFileExtension(fileExt))
+	searchPath := wutil.ConfigSearchPath(basename, wutil.WithFileExtension(fileExt))
 	if assert.True(t, len(searchPath) == 2) {
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s.%s", userConfigDir, basename, basename, fileExt), searchPath[0])
 		assert.Equal(t, fmt.Sprintf("%s.%s", basename, fileExt), searchPath[1])
@@ -85,7 +85,7 @@ func TestFileBasenameConfigSearchPath(t *testing.T) {
 	userConfigDir, _ := os.UserConfigDir()
 	assert.True(t, len(userConfigDir) > 0) // guard against an empty path
 
-	searchPath := wlib.ConfigSearchPath(basename, wlib.WithConfigFileBasename(fileBasename))
+	searchPath := wutil.ConfigSearchPath(basename, wutil.WithConfigFileBasename(fileBasename))
 	if assert.True(t, len(searchPath) == 2) {
 		assert.Equal(t, fmt.Sprintf("%s/%s/%s.yml", userConfigDir, basename, fileBasename), searchPath[0])
 		assert.Equal(t, fmt.Sprintf("%s.yml", fileBasename), searchPath[1])
